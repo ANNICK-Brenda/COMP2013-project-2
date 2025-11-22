@@ -18,6 +18,7 @@ export default function ProductForm({
   const [isEditing, setIsEditing] = useState(false);
   const [message, setMessage] = useState("");
 
+  // Load product into form when pressing Edit
   useEffect(() => {
     if (editData) {
       setFormData({
@@ -27,10 +28,13 @@ export default function ProductForm({
         price: editData.price,
         _id: editData._id,
       });
+
       setIsEditing(true);
+      setMessage(""); 
     }
   }, [editData]);
 
+  // Reset form after submit or cancel edit
   const resetForm = () => {
     setFormData({
       productName: "",
@@ -43,6 +47,7 @@ export default function ProductForm({
     clearEditMode && clearEditMode();
   };
 
+  // Handle typing in inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -57,11 +62,9 @@ export default function ProductForm({
       return;
     }
 
+    // Add a new product
     try {
-      const result = await axios.post(
-        "http://localhost:3000/add-product",
-        formData
-      );
+      await axios.post("http://localhost:3000/add-product", formData);
 
       setMessage(`Added: ${formData.productName}`);
 
@@ -112,7 +115,8 @@ export default function ProductForm({
 
       {isEditing && (
         <p style={{ color: "yellow" }}>
-          Editing product with ID: <br />
+          Editing product with ID:
+          <br />
           {formData._id}
         </p>
       )}

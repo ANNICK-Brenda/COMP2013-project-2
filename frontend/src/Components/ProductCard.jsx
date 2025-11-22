@@ -9,12 +9,10 @@ export default function ProductCard({
   handleAddQuantity,
   handleRemoveQuantity,
   handleAddToCart,
-  handleOnDelete,      // <-- added
-  handleOnEdit,        // <-- added
-  id,
+  handleOnDelete,   
+  handleOnEdit,        
 }) {
 
-  // FINAL SAFE FIX: handle string prices like "$3.65"
   let numericPrice = 0;
 
   if (typeof price === "string") {
